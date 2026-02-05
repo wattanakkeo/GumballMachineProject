@@ -6,45 +6,68 @@ public class GumballMachine {
     final Gumball redGumball;
     final Gumball yellowGumball;
 
-    // Constants for valid coins values (in cents)
-    public static final int NICKEL = 5;
-    public static final int DIME = 10;
-    public static final int QUARTER = 25;
-
     // Variables to track the dispensed gumball
     private int redGumDispensed;
     private int yellowGumDispensed;
     
-    // Variables to track balance and inserted coin
-    private int currBalance;
-    private int invalidCoinsValue; // Number of invalid that will be returned
+    // Variables to track balance and inserted coins
+    final Currency currency;
+    private int invalidCoinsValue;
 
 
-    //Constructor only instantiates a GumballMachine with only 2 gumballs
+    // Constructor only instantiates a GumballMachine with only 2 types of gumballs
     public GumballMachine() {
         redGumball = new Gumball("Red", 5);
         yellowGumball = new Gumball("Yellow", 10);
-        this.currBalance = 0;
+        this.currency = new Currency();
         this.invalidCoinsValue = 0;
         this.redGumDispensed = 0;
-        this.yellowGumDispensed= 0;
+        this.yellowGumDispensed = 0;
     }
 
     // Insert coin, balance added, invalid coins are stored and return
     public boolean insertCoin(int coinValue) {
-        if (isValidCoin(coinValue)) {
-            currBalance += coinValue;
-            return true;
-        } else {
-            // Invalid coin is stored and return when lever is pressed
+        boolean isAccepted = currency.insertCoin(coinValue);
+        if (!isAccepted) {
             invalidCoinsValue += coinValue;
-            return false;
+            dispenseInvalidCoin();
+        }
+        return isAccepted;
+    }
+
+    // Helper method to dispense and reset the invalidCoinsValue
+    public int dispenseInvalidCoin() {
+        int out = invalidCoinsValue;
+        invalidCoinsValue = 0;
+        return out;
+    }
+
+    public boolean dispenseGumball(String color) {
+        // Checks for the red color gumball and increments redGumDispensed if balance is sufficient
+        if (redGumball.getColor().equals(color)) {
+            if ((currency.getBalance() - redGumball.getPrice()) < 0) {
+                return false;
+            }
+            currency.deduct(redGumball.getPrice());
+            redGumDispensed++;
+            System.out.println(redGumDispensed);
+            return true;
         }
 
-    }
+        // Checks for the yellow color gumball and increments redGumDispensed if balance is sufficient
+        if (yellowGumball.getColor().equals(color)) {
+            if ((currency.getBalance() - yellowGumball.getPrice()) < 0) {
+                return false;
+            }
+            currency.deduct(yellowGumball.getPrice());
+            yellowGumDispensed++;
+            System.out.println(yellowGumDispensed);
+            return true;
+        }
 
-    // Helper to check for valid coin
-    public boolean isValidCoin(int coinValue) {
-        return coinValue == NICKEL || coinValue == DIME || coinValue == QUARTER;
+        // Error if some other color is entered
+        System.out.println("Error incorrect color options");
+        return false;
     }
 }
+
