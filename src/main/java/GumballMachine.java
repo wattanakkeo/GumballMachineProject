@@ -12,34 +12,23 @@ public class GumballMachine {
     
     // Variables to track balance and inserted coins
     final Currency currency;
-    private int invalidCoinsValue;
-
 
     // Constructor only instantiates a GumballMachine with only 2 types of gumballs
     public GumballMachine() {
         redGumball = new Gumball("Red", 5);
         yellowGumball = new Gumball("Yellow", 10);
         this.currency = new Currency();
-        this.invalidCoinsValue = 0;
         this.redGumDispensed = 0;
         this.yellowGumDispensed = 0;
     }
 
     // Insert coin, balance added, invalid coins are stored and return
-    public boolean insertCoin(int coinValue) {
+    public int insertCoin(int coinValue) {
         boolean isAccepted = currency.insertCoin(coinValue);
         if (!isAccepted) {
-            invalidCoinsValue += coinValue;
-            dispenseInvalidCoin();
+            return coinValue;
         }
-        return isAccepted;
-    }
-
-    // Helper method to dispense and reset the invalidCoinsValue
-    public int dispenseInvalidCoin() {
-        int out = invalidCoinsValue;
-        invalidCoinsValue = 0;
-        return out;
+        return 0;
     }
 
     public boolean dispenseGumball(String color) {
@@ -50,7 +39,6 @@ public class GumballMachine {
             }
             currency.deduct(redGumball.getPrice());
             redGumDispensed++;
-            System.out.println(redGumDispensed);
             return true;
         }
 
@@ -61,7 +49,6 @@ public class GumballMachine {
             }
             currency.deduct(yellowGumball.getPrice());
             yellowGumDispensed++;
-            System.out.println(yellowGumDispensed);
             return true;
         }
 
