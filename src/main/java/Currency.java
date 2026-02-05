@@ -10,13 +10,15 @@ public class Currency {
     }
 
     public boolean insertCoin(int coinValue) {
-        if (!isValidCoin(coinValue)) return false;
+        if (!isValidCoin(coinValue))
+            return false;
         balance += coinValue;
         return true;
     }
 
     public boolean deduct(int amount) {
-        if (balance < amount) return false;
+        if (balance < amount)
+            return false;
         balance -= amount;
         return true;
     }
@@ -27,5 +29,9 @@ public class Currency {
 
     private boolean isValidCoin(int coinValue) {
         return coinValue == NICKEL || coinValue == DIME || coinValue == QUARTER;
+    }
+
+    public void resetBalance() {
+        balance = 0;
     }
 }
