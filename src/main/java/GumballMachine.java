@@ -79,7 +79,19 @@ public class GumballMachine {
 
     // Take money from coin return to tray
     public int pullCoinReturn() {
-        return currency.pullCoinReturnToTray();
+        int returned = 0;
+
+        // Move any pending invalid coins to the return tray first
+        currency.releaseInvalidToTray();
+
+        // Take coins already in the return tray
+        returned += currency.pullCoinReturnToTray();
+
+        // Take remaining balance
+        returned += currency.getBalance();
+        currency.resetBalance();
+
+        return returned;
     }
 }
 

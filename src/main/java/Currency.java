@@ -16,7 +16,7 @@ public class Currency {
         this.coinReturntray = 0;
         this.pendingInvalid = 0;
     }
-    
+
     public int getBalance() {
         return balance;
     }
@@ -30,12 +30,16 @@ public class Currency {
     }
 
     /**
-     * 
-     * @param coinValue - 
+     *
+     * @param coinValue -
      * @return
      */
     public boolean insertCoin(int coinValue) {
-        if (!isValidCoin(coinValue)) return false;
+        if (!isValidCoin(coinValue)) {
+            pendingInvalid += coinValue;
+            releaseInvalidToTray();
+            return false;
+        }
         balance += coinValue;
         return true;
     }
@@ -65,8 +69,8 @@ public class Currency {
         return coinOut;
     }
 
-
-
-
-
+    // Resets the balance back to 0
+    public int resetBalance() {
+        return balance = 0;
+    }
 }
