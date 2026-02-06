@@ -2,7 +2,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GumballMachineTest { 
-    // Test if GumballMachine create exactly 2 colors: Red and Yellow and if the price is correct
+    /** 
+    * - Test if GumballMachine object creates exactly 2 colors of gumball: Red and yellow
+    * - Test if Red gumball is exactly 5 cents and Yellow gumball is exactly 10 cents
+    * - Test if balance is initilized with 0.
+    */
     @Test
     void constructor_createsRedAndYellowGumballs() {
         GumballMachine gm = new GumballMachine();
@@ -19,7 +23,10 @@ public class GumballMachineTest {
         assertEquals(0, gm.currency.getBalance());
     }
 
-    // Test if balance add up correctly when valid coins are inserted
+    /**
+     * - Verify if invalid coins return 0 when accepted
+     * - Verify if balance is added up correctly: 5 + 10 + 25
+     */
     @Test 
     void insert_validCoins_returns0_andIncreaseBalance() {
         GumballMachine gm = new GumballMachine();
@@ -34,7 +41,10 @@ public class GumballMachineTest {
         assertEquals(40, gm.currency.getBalance());
     }
 
-    // Test if balance will not change when inserting invalid coin value
+    /**
+     * - Test if inserting invalid coins value is detected
+     * - Verify that invalid coins will not change the balance
+     */
     @Test
     void insert_invalidCoins_returnCoinValue_andDoesNotChangeBalance() {
         GumballMachine gm = new GumballMachine();
@@ -47,7 +57,10 @@ public class GumballMachineTest {
         assertEquals(0, gm.currency.getBalance());
     }
 
-    // Test if no gumballs dispensed when user has an insufficient balance
+    /** 
+    * - Test that dispensing does not occur when user does not have enough balanmce.
+    * - Verify that the dispensing count of machine unchanges when user has insufficient balance. 
+    */
     @Test
     void dispenseGumball_insufficient_balance_returnCurrentGumCount() {
         GumballMachine gm = new GumballMachine();
@@ -60,7 +73,10 @@ public class GumballMachineTest {
         assertEquals(0, gm.getYellowDispensed());
     }
 
-    // Test if correct amount of gumballs is dispensed and balance is deducted
+    /**
+     * - Test if balance is deducted correctly with sufficent balance
+     * - Test if gumball is dispensed correctly with sufficient balance
+     */
     @Test
     void dispenseGumball_sufficient_balance_incrementGumball_deductBalance_andReturnCurrentGumAmount() {
         GumballMachine gm = new GumballMachine();
@@ -74,7 +90,10 @@ public class GumballMachineTest {
         assertEquals(10, gm.getBalance());
     }
 
-    // Test the correct amount of change dispensed when returning change
+    /**
+     * - test if pullCoinReturn() return all current balance + returned/invalid coin 
+     * - verify that the balance is reset back to 0 afterward.
+     */
     @Test
     void returnChange() {
         GumballMachine gm = new GumballMachine();
