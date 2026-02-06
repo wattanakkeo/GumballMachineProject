@@ -5,8 +5,8 @@ public class Gumball {
 
     /**
     * Constructor for Gumball
-    * @color - Color of gumball
-    * @price - price (in cents)
+    * @param1 color - Color of gumball
+    * @param2 price - price (in cents)
     */
     public Gumball(String color, int price) {
         this.color = color;

@@ -6,7 +6,7 @@ public class GumballMachine {
     final Gumball redGumball;
     final Gumball yellowGumball;
 
-    // Variables to track the dispensed gumball
+    // The dispensed gumball
     private int redGumDispensed;
     private int yellowGumDispensed;
     
@@ -20,6 +20,16 @@ public class GumballMachine {
         this.currency = new Currency();
         this.redGumDispensed = 0;
         this.yellowGumDispensed = 0;
+    }
+    // Getters for testing
+    public int getBalance() {
+        return currency.getBalance();
+    }
+    public int getRedDispensed() {
+        return redGumDispensed;
+    }
+    public int getYellowDispensed() {
+        return yellowGumDispensed;
     }
 
     // Insert coin, balance added, invalid coins are stored and return
@@ -55,6 +65,21 @@ public class GumballMachine {
         // Error if some other color is entered
         System.out.println("Error incorrect color options");
         return false;
+    }
+
+    // Red lever
+    public boolean dispenseRed() {
+        return dispenseGumball("Red");
+    }
+
+    // Yellow lever
+    public boolean dispenseYellow() {
+        return dispenseGumball("Yellow");
+    }
+
+    // Take money from coin return to tray
+    public int pullCoinReturn() {
+        return currency.pullCoinReturnToTray();
     }
 }
 
