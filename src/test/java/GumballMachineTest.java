@@ -101,12 +101,31 @@ public class GumballMachineTest {
         // Returns users balance
         gm.insertCoin(1);
         assertEquals(1, gm.pullCoinReturn());
+        assertEquals(0, gm.getBalance());
 
         gm.insertCoin(Currency.DIME);
         assertEquals(10, gm.pullCoinReturn());
+        assertEquals(0, gm.getBalance());
 
         gm.insertCoin(Currency.NICKEL);
         assertEquals(5, gm.pullCoinReturn());
+        assertEquals(0, gm.getBalance());
+    }
+
+    /**
+     * - Test if pullCoinReturn() returns correct balance after spending
+     * - Verify the balance is set to 0 after
+     */
+
+    @Test
+    void returnChange_after_spending() {
+        GumballMachine gm = new GumballMachine();
+
+        //Insert quarter and spends 10 cents on a yellow gumball
+        gm.insertCoin(Currency.QUARTER);
+        gm.dispenseYellow();
+        assertEquals(15, gm.pullCoinReturn());
+        assertEquals(0, gm.getBalance());
 
     }
 }
